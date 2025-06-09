@@ -41,12 +41,12 @@ export class GoogleSheetService {
     }
 
     async authorize() {
-        //const credentials = await this.loadCredentials();
+        const credentials = await this.loadCredentials();
 
         //Begin GET-request
-        const response = await firstValueFrom(this.loadCredentialsUrl());
+        //const response = await firstValueFrom(this.loadCredentialsUrl());
         //console.log('Response:', response.data);
-        const credentials = response.data;
+        //const credentials = response.data;
         //End GET-request
 
         const auth = new google.auth.GoogleAuth({
