@@ -7,7 +7,7 @@ export class PostgresqlService implements OnModuleDestroy {
 
     constructor() {
         Logger.log('PostgresqlService initialized', 'PostgresqlService');
-        this.connectPosgresql();
+        //this.connectPosgresql();
     }
 
     onModuleDestroy() {

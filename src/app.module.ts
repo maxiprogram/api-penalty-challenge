@@ -5,6 +5,7 @@ import { GoogleSheetService } from './google-sheet/google-sheet.service';
 import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { PostgresqlService } from './postgresql/postgresql.service';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { PostgresqlService } from './postgresql/postgresql.service';
     ConfigModule.forRoot({isGlobal: true}),
   ],
   controllers: [AppController],
-  providers: [AppService, GoogleSheetService, PostgresqlService],
+  providers: [AppService, GoogleSheetService, PostgresqlService, PrismaService],
 })
 export class AppModule {}

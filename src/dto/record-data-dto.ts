@@ -8,6 +8,8 @@ enum NameSheet {
 }
 
 export class RecordDataDto {
+    id: string
+
     @IsEnum(NameSheet)
     @IsNotEmpty()
     nameSheet: NameSheet

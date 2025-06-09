@@ -66,7 +66,7 @@ export class GoogleSheetService {
             range: `${recordData.nameSheet}!A2`,
             valueInputOption: 'RAW',
             requestBody: {
-                values: [['???', recordData.firstName, recordData.lastName, recordData.email, recordData.sphere]],
+                values: [[recordData.id, recordData.firstName, recordData.lastName, recordData.email, recordData.sphere]],
             },
         });
         console.log('Данные записаны');
