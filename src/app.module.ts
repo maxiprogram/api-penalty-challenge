@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { GoogleSheetService } from './google-sheet/google-sheet.service';
 import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
+import { PostgresqlService } from './postgresql/postgresql.service';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { HttpModule } from '@nestjs/axios';
     ConfigModule.forRoot({isGlobal: true}),
   ],
   controllers: [AppController],
-  providers: [AppService, GoogleSheetService],
+  providers: [AppService, GoogleSheetService, PostgresqlService],
 })
 export class AppModule {}
