@@ -1,5 +1,8 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
+import { AxiosRequestConfig } from 'axios';
 import { google, sheets_v4 } from 'googleapis';
+import { firstValueFrom, map } from 'rxjs';
 import { RecordDataDto } from 'src/dto/record-data-dto';
 const fs = require('fs');
 
@@ -8,7 +11,7 @@ export class GoogleSheetService {
     private authClient;
     private sheets;
 
-    constructor() {
+    constructor(private readonly httpService: HttpService) {
         Logger.log('GoogleSheetService initialized', 'GoogleSheetService');
         this.authorize();
     }
@@ -21,12 +24,30 @@ export class GoogleSheetService {
         throw new Error('Файл учетных данных не найден');
     }
 
+    private loadCredentialsUrl() {
+        const config: AxiosRequestConfig = {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            },
+        };
+        return this.httpService.get(
+            process.env.CREDENTIALS_PATH ? process.env.CREDENTIALS_PATH : "",
+            config
+        );
+    }
+
     public getAuthClient() {
         return this.authClient;
     }
 
     async authorize() {
-        const credentials = await this.loadCredentials();
+        //const credentials = await this.loadCredentials();
+
+        //Begin GET-request
+        const response = await firstValueFrom(this.loadCredentialsUrl());
+        //console.log('Response:', response.data);
+        const credentials = response.data;
+        //End GET-request
 
         const auth = new google.auth.GoogleAuth({
             credentials: credentials,
