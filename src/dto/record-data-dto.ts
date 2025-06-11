@@ -19,7 +19,6 @@ export class RecordDataDto {
     firstName: string;
 
     @IsString()
-    @IsNotEmpty()
     lastName: string;
   
     @IsEmail()
