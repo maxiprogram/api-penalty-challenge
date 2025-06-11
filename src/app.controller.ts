@@ -17,6 +17,19 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Get('get-video')
+  getVideo() {
+    let min = 0;
+    let max = 10;
+    let rnd = Math.floor(Math.random() * (max - min + 1)) + min;
+    rnd = 0;
+    return {
+      url_video_short: `videos/short/${rnd}.mp4`,
+      url_video_full: `videos/full/${rnd}.mp4`,
+      answer: true,
+    };
+  }
+
   @Post('append')
   @HttpCode(200)
   async appendRecord(@Body() recordData: RecordDataDto) {
