@@ -20,13 +20,14 @@ export class AppController {
   @Get('get-video')
   getVideo() {
     let min = 0;
-    let max = 10;
+    let max = this.appService.videoPath.array_answers.length;
     let rnd = Math.floor(Math.random() * (max - min + 1)) + min;
     rnd = 0;
+    
     return {
-      url_video_short: `videos/short/${rnd}.mp4`,
-      url_video_full: `videos/full/${rnd}.mp4`,
-      answer: true,
+      url_video_short: `${this.appService.videoPath.host_video}/videos/short/${rnd}.mp4`,
+      url_video_full: `${this.appService.videoPath.host_video}/videos/full/${rnd}.mp4`,
+      answer: this.appService.videoPath.array_answers[rnd],
     };
   }
 
