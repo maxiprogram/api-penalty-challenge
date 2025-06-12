@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, Logger, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { GoogleSheetService } from './google-sheet/google-sheet.service';
-import { RecordDataDto } from './dto/record-data-dto';
+import { RecordDataDto, UpdateRecordDataDto } from './dto/record-data-dto';
 import { PrismaService } from './prisma/prisma.service';
 
 @Controller('api')
@@ -46,7 +46,7 @@ export class AppController {
           }
         });
         //console.log('newRecord:', newRecord);
-        recordData.id = newRecord.id.toString();
+        recordData.id = newRecord.id;
         break;
       }
       case 'SheetB': {
@@ -59,7 +59,7 @@ export class AppController {
           }
         });
         //console.log('newRecord:', newRecord);
-        recordData.id = newRecord.id.toString();
+        recordData.id = newRecord.id;
         break;
       }
       case 'SheetC': {
@@ -72,7 +72,7 @@ export class AppController {
           }
         });
         //console.log('newRecord:', newRecord);
-        recordData.id = newRecord.id.toString();
+        recordData.id = newRecord.id;
         break;
       }
       case 'SheetS': {
@@ -85,7 +85,7 @@ export class AppController {
           }
         });
         //console.log('newRecord:', newRecord);
-        recordData.id = newRecord.id.toString();
+        recordData.id = newRecord.id;
         break;
       }   
     }
@@ -94,6 +94,59 @@ export class AppController {
 
     return {status: 'ok', id: recordData.id}
   }
+
+  @Post('update')
+  @HttpCode(200)
+  async updateRecord(@Body() recordData: UpdateRecordDataDto) {
+
+    switch (recordData.nameSheet) {
+      case 'SheetA': {
+        const newRecord = await this.prismaService.winSheetA.create({
+          data: {
+            id_user: recordData.idUser
+          }
+        });
+        //console.log('newRecord:', newRecord);
+        recordData.idWin = newRecord.id;
+        break;
+      }
+      case 'SheetB': {
+        const newRecord = await this.prismaService.winSheetB.create({
+          data: {
+            id_user: recordData.idUser
+          }
+        });
+        //console.log('newRecord:', newRecord);
+        recordData.idWin = newRecord.id;
+        break;
+      }
+      case 'SheetC': {
+        const newRecord = await this.prismaService.winSheetC.create({
+          data: {
+            id_user: recordData.idUser
+          }
+        });
+        //console.log('newRecord:', newRecord);
+        recordData.idWin = newRecord.id;
+        break;
+      }
+      case 'SheetS': {
+        const newRecord = await this.prismaService.winSheetS.create({
+          data: {
+            id_user: recordData.idUser
+          }
+        });
+        //console.log('newRecord:', newRecord);
+        recordData.idWin = newRecord.id;
+        break;
+      }
+    }
+    
+    await this.googleSheetService.updateRecord(recordData);
+
+    return {status: 'ok', id_win: recordData.idWin}
+  }
+
 
   @Post('auth-google-callback')
   async authGoogleCallback(@Body() body) {

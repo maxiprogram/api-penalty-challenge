@@ -1,6 +1,6 @@
-import { IsString, IsEmail, IsNotEmpty, IsEnum } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, IsEnum, IsInt } from 'class-validator';
 
-enum NameSheet {
+export enum NameSheet {
     SheetA = 'SheetA',
     SheetB = 'SheetB',
     SheetC = 'SheetC',
@@ -8,7 +8,7 @@ enum NameSheet {
 }
 
 export class RecordDataDto {
-    id: string
+    id: number;
 
     @IsEnum(NameSheet)
     @IsNotEmpty()
@@ -28,4 +28,16 @@ export class RecordDataDto {
     @IsString()
     @IsNotEmpty()
     sphere: string;
+}
+
+export class UpdateRecordDataDto {
+    idWin: number;
+
+    @IsEnum(NameSheet)
+    @IsNotEmpty()
+    nameSheet: NameSheet
+    
+    @IsInt()
+    @IsNotEmpty()
+    idUser: number
 }

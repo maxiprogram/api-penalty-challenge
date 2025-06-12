@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { AxiosRequestConfig } from 'axios';
 import { google, sheets_v4 } from 'googleapis';
 import { firstValueFrom, map } from 'rxjs';
-import { RecordDataDto } from 'src/dto/record-data-dto';
+import { NameSheet, RecordDataDto, UpdateRecordDataDto } from 'src/dto/record-data-dto';
 const fs = require('fs');
 
 @Injectable()
@@ -70,6 +70,34 @@ export class GoogleSheetService {
             },
         });
         console.log('Данные записаны');
+    }
+
+    async updateRecord(recordData: UpdateRecordDataDto) {
+        let ch = '';
+        switch (recordData.nameSheet) {
+            case NameSheet.SheetA:
+                ch = 'A';
+                break;
+            case NameSheet.SheetB:
+                ch = 'B';
+                break;
+            case NameSheet.SheetC:
+                ch = 'C';
+                break;
+            case NameSheet.SheetS:
+                ch = 'S';
+                break;
+        }
+
+        await this.sheets.spreadsheets.values.update({
+            spreadsheetId: process.env.SPREADSHEET_ID,
+            range: `${recordData.nameSheet}!F${recordData.idUser + 1}`,
+            valueInputOption: 'RAW',
+            requestBody: {
+                values: [[`${ch}${recordData.idWin}`]],
+            },
+        });
+        console.log('Данные обновлены');
     }
 
     async testRead() {

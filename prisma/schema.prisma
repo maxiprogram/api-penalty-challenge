@@ -45,3 +45,23 @@ model SheetS {
   email   String
   sphere String
 }
+
+model WinSheetA {
+  id      Int      @id @default(autoincrement())
+  id_user Int
+}
+
+model WinSheetB {
+  id      Int      @id @default(autoincrement())
+  id_user Int
+}
+
+model WinSheetC {
+  id      Int      @id @default(autoincrement())
+  id_user Int
+}
+
+model WinSheetS {
+  id      Int      @id @default(autoincrement())
+  id_user Int
+}
