@@ -37,7 +37,7 @@ export class AppController {
   @HttpCode(200)
   async appendRecord(@Body() recordData: RecordDataDto) {
 
-    console.time('Time DB');
+    console.time('Time append DB');
     switch (recordData.nameSheet) {
       case 'SheetA': {
         const newRecord = await this.prismaService.sheetA.create({
@@ -92,11 +92,15 @@ export class AppController {
         break;
       }   
     }
-    console.timeEnd('Time DB');
+    console.timeEnd('Time append DB');
 
-    console.time('Time Sheet');
-    await this.googleSheetService.appenRecord(recordData);
-    console.timeEnd('Time Sheet');
+    //console.time('Time append Sheet');
+    this.googleSheetService.appenRecord(recordData).then((result) => {
+
+    }).catch((error) => {
+      console.error('Данные не записаны!');
+    });
+    //console.timeEnd('Time append Sheet');
 
     return {status: 'ok', id: recordData.id}
   }
@@ -105,6 +109,7 @@ export class AppController {
   @HttpCode(200)
   async updateRecord(@Body() recordData: UpdateRecordDataDto) {
 
+    console.time('Time update DB');
     switch (recordData.nameSheet) {
       case 'SheetA': {
         const newRecord = await this.prismaService.winSheetA.create({
@@ -147,8 +152,11 @@ export class AppController {
         break;
       }
     }
+    console.timeEnd('Time update DB');
     
+    console.time('Time update Sheet');
     await this.googleSheetService.updateRecord(recordData);
+    console.timeEnd('Time update Sheet');
 
     return {status: 'ok', id_win: recordData.idWin}
   }
