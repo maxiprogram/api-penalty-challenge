@@ -37,6 +37,7 @@ export class AppController {
   @HttpCode(200)
   async appendRecord(@Body() recordData: RecordDataDto) {
 
+    console.time('Time DB');
     switch (recordData.nameSheet) {
       case 'SheetA': {
         const newRecord = await this.prismaService.sheetA.create({
@@ -91,8 +92,11 @@ export class AppController {
         break;
       }   
     }
-    
+    console.timeEnd('Time DB');
+
+    console.time('Time Sheet');
     await this.googleSheetService.appenRecord(recordData);
+    console.timeEnd('Time Sheet');
 
     return {status: 'ok', id: recordData.id}
   }
