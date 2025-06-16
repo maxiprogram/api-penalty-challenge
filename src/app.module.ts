@@ -7,6 +7,7 @@ import { HttpModule } from '@nestjs/axios';
 import { PrismaService } from './prisma/prisma.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { SendMailService } from './send-mail-service/send-mail-service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { join } from 'path';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, GoogleSheetService, PrismaService],
+  providers: [AppService, GoogleSheetService, PrismaService, SendMailService],
 })
 export class AppModule {}

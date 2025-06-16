@@ -3,13 +3,15 @@ import { AppService } from './app.service';
 import { GoogleSheetService } from './google-sheet/google-sheet.service';
 import { RecordDataDto, UpdateRecordDataDto } from './dto/record-data-dto';
 import { PrismaService } from './prisma/prisma.service';
+import { SendMailService } from './send-mail-service/send-mail-service';
 
 @Controller('api')
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly googleSheetService: GoogleSheetService,
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    private readonly sendMailService: SendMailService
   ) {}
 
   @Get()
@@ -147,6 +149,17 @@ export class AppController {
     return {status: 'ok', id_win: recordData.idWin}
   }
 
+  @Get('test-mail')
+  async test_mail() {
+    let result = await this.sendMailService.sendMail({
+      username: 'test_username',
+      subject: 'test_sybject',
+      from: 'from_email',
+      textMessage: 'Hello World!',
+    });
+    console.log(result);
+    return {status: 'ok'};
+  }
 
   @Post('auth-google-callback')
   async authGoogleCallback(@Body() body) {
