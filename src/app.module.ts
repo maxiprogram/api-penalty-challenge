@@ -14,7 +14,7 @@ import { SendMailService } from './send-mail-service/send-mail-service';
     HttpModule,
     ConfigModule.forRoot({isGlobal: true}),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../..', 'static'),
+      rootPath: process.env.STATIC_PATH, //join(__dirname, '../..', 'static'),
     }),
   ],
   controllers: [AppController],
