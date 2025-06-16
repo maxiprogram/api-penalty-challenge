@@ -158,7 +158,7 @@ export class AppController {
     this.googleSheetService.updateRecord(recordData).then((result) => {
 
     }).catch((error) => {
-      console.error('Данные обновлены!');
+      console.error('Данные не обновлены!');
     });
     //console.timeEnd('Time update Sheet');
 
