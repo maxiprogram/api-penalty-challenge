@@ -154,9 +154,13 @@ export class AppController {
     }
     console.timeEnd('Time update DB');
     
-    console.time('Time update Sheet');
-    await this.googleSheetService.updateRecord(recordData);
-    console.timeEnd('Time update Sheet');
+    //console.time('Time update Sheet');
+    this.googleSheetService.updateRecord(recordData).then((result) => {
+
+    }).catch((error) => {
+      console.error('Данные обновлены!');
+    });
+    //console.timeEnd('Time update Sheet');
 
     return {status: 'ok', id_win: recordData.idWin}
   }
