@@ -3,9 +3,8 @@ import * as nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
 export interface MailMessage {
-  username: string;
   subject: string;
-  from: string;
+  to: string|undefined;
   textMessage: string;
 };
 
@@ -33,7 +32,10 @@ export class SendMailService {
 
     sendMail(mailMessage: MailMessage) {
       this.mailOptions.subject = mailMessage.subject;
-      this.mailOptions.text = `Обратная связь\nОт: ${mailMessage.username}\nE-mail: ${mailMessage.from}\n\n${mailMessage.textMessage}`;
+      this.mailOptions.text = `ТУТ ТЕКСТ + HTML ${mailMessage.textMessage}`;
+      this.mailOptions.to = mailMessage.to;
+
+      //console.log(this.mailOptions);
 
       return this.transporter.sendMail(this.mailOptions);
     }
