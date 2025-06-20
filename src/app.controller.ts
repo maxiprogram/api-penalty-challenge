@@ -21,14 +21,18 @@ export class AppController {
 
   @Get('get-video')
   getVideo() {
-    let min = 0;
+    let min = 1;
     let max = this.appService.videoPath.array_answers.length;
     let rnd = Math.floor(Math.random() * (max - min + 1)) + min;
-    rnd = 0;
+    //rnd = 0;
+    const rndName: string = (rnd < 10 ? ('0'+rnd) : (''+rnd));
+
+    const shortName = `${this.appService.videoPath.host_video}/videos/short/${rndName}SG.mp4`;
+    const fullName = `${this.appService.videoPath.host_video}/videos/full/${rndName}FG.mp4`;
     
     return {
-      url_video_short: `${this.appService.videoPath.host_video}/videos/short/${rnd}.mp4`,
-      url_video_full: `${this.appService.videoPath.host_video}/videos/full/${rnd}.mp4`,
+      url_video_short: shortName,
+      url_video_full: fullName,
       answer: this.appService.videoPath.array_answers[rnd],
     };
   }
