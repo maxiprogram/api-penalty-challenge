@@ -116,6 +116,14 @@ export class AppController {
     console.time('Time update DB');
     switch (recordData.nameSheet) {
       case 'SheetA': {
+        const newRecord = await this.prismaService.winSheetA.create({
+          data: {
+            id_user: recordData.idUser
+          }
+        });
+        //console.log('newRecord:', newRecord);
+        recordData.idWin = newRecord.id;
+
         this.prismaService.sheetA.findUnique({
           where: {
             id: recordData.idUser
@@ -124,22 +132,23 @@ export class AppController {
           //console.log(result);
           
           if(result?.email) {
-            this.appService.sendMail(result.email);
+            this.appService.sendMail(result.email, `A${recordData.idWin}`);
           }
         }).catch((error) => {
           console.error('Ошибка SQL!', error);
         });
 
-        const newRecord = await this.prismaService.winSheetA.create({
+        break;
+      }
+      case 'SheetB': {
+        const newRecord = await this.prismaService.winSheetB.create({
           data: {
             id_user: recordData.idUser
           }
         });
         //console.log('newRecord:', newRecord);
         recordData.idWin = newRecord.id;
-        break;
-      }
-      case 'SheetB': {
+
         this.prismaService.sheetB.findUnique({
           where: {
             id: recordData.idUser
@@ -148,22 +157,22 @@ export class AppController {
           //console.log(result);
           
           if(result?.email) {
-            this.appService.sendMail(result.email);
+            this.appService.sendMail(result.email, `B${recordData.idWin}`);
           }
         }).catch((error) => {
           console.error('Ошибка SQL!', error);
         });
-
-        const newRecord = await this.prismaService.winSheetB.create({
+        break;
+      }
+      case 'SheetC': {
+        const newRecord = await this.prismaService.winSheetC.create({
           data: {
             id_user: recordData.idUser
           }
         });
         //console.log('newRecord:', newRecord);
         recordData.idWin = newRecord.id;
-        break;
-      }
-      case 'SheetC': {
+
         this.prismaService.sheetC.findUnique({
           where: {
             id: recordData.idUser
@@ -172,22 +181,22 @@ export class AppController {
           //console.log(result);
           
           if(result?.email) {
-            this.appService.sendMail(result.email);
+            this.appService.sendMail(result.email, `C${recordData.idWin}`);
           }
         }).catch((error) => {
           console.error('Ошибка SQL!', error);
         });
-
-        const newRecord = await this.prismaService.winSheetC.create({
+        break;
+      }
+      case 'SheetS': {
+        const newRecord = await this.prismaService.winSheetS.create({
           data: {
             id_user: recordData.idUser
           }
         });
         //console.log('newRecord:', newRecord);
         recordData.idWin = newRecord.id;
-        break;
-      }
-      case 'SheetS': {
+
         this.prismaService.sheetS.findUnique({
           where: {
             id: recordData.idUser
@@ -196,19 +205,11 @@ export class AppController {
           //console.log(result);
           
           if(result?.email) {
-            this.appService.sendMail(result.email);
+            this.appService.sendMail(result.email, `S${recordData.idWin}`);
           }
         }).catch((error) => {
           console.error('Ошибка SQL!', error);
         });
-
-        const newRecord = await this.prismaService.winSheetS.create({
-          data: {
-            id_user: recordData.idUser
-          }
-        });
-        //console.log('newRecord:', newRecord);
-        recordData.idWin = newRecord.id;
         break;
       }
     }

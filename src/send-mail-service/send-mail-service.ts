@@ -32,7 +32,8 @@ export class SendMailService {
 
     sendMail(mailMessage: MailMessage) {
       this.mailOptions.subject = mailMessage.subject;
-      this.mailOptions.text = `ТУТ ТЕКСТ + HTML ${mailMessage.textMessage}`;
+      //this.mailOptions.text = mailMessage.textMessage;
+      this.mailOptions.html = mailMessage.textMessage;
       this.mailOptions.to = mailMessage.to;
 
       //console.log(this.mailOptions);
