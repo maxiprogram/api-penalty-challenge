@@ -33,7 +33,7 @@ export class AppController {
     return {
       url_video_short: shortName,
       url_video_full: fullName,
-      answer: this.appService.videoPath.array_answers[rnd],
+      answer: this.appService.videoPath.array_answers[rnd-1],
     };
   }
 
